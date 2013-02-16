@@ -5,15 +5,17 @@ type ThmStatement = String
                     -- Examples:
                     -- Reals -> ModEquation
                     -- Equation -> Equation
-data ThmSignature = ThmSignature TheoremStatement TheoremStatement
+data ThmSignature = ThmSignature [ThmStatement] [ThmStatement]
 type ThmContent = String
 type ThmProof = String
 type ThmRef = String
 
 data Thm =
-  { thmType :: TheoremType
-  , thmName :: String
-  , thmSignature :: ThmSignature
-  , thmContent ::ThmContent
-  , thmProof :: ThmProof
-  , thmRef :: ThmRef}
+  { thmType ::          ThmType
+  , thmContent ::       ThmContent
+
+  , thmName ::          Maybe String
+  , thmSignature ::     Maybe ThmSignature
+  , thmProof ::         Maybe ThmProof
+  , thmRef ::           Maybe ThmRef
+  }
