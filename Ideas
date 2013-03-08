@@ -1,0 +1,17 @@
+Single User First.
+    - /: display of added theorems (GET).
+    - /intro: brief introduction.
+    - /search: searching theorems.
+    - /search_res: search results.
+    - /add: add theorems (LaTeX support).
+
+Backend (necessary or not?):
+    - ADT (algebraic / abstract data types).
+    - Store, load (how to communicate with Yesod?).
+    - Manipulations of theorems (e.g. sort). 
+
+Approaches proposal: build a cli-based backend first, then integrate with yesod.
+
+References:
+    Yesod book: http://www.yesodweb.com/book
+    Search: http://www.yesodweb.com/book/case-study-sphinx
