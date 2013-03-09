@@ -18,9 +18,9 @@ import Data.Time (Day)
 --   , note ::          Maybe ThmNote -- notes
 --   } deriving (Eq, Show)
 
-data ThmCategory = Corrolary | Definition
-             | Theorem
-             | Proposition
+data ThmCategory = Proposition | Theorem
+             | Definition
+             | Corrolary
              | Lemma
              | Algorithm
              | Remark
@@ -47,3 +47,7 @@ type ThmStatement = Text
 -- http://www.yesodweb.com/book/persistent/
 share [mkPersist sqlOnlySettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
+
+
+instance Show ThmSignature where
+  show (ThmSignature from to) = (show from) ++ " -> " ++ (show to)

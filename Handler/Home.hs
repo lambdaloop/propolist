@@ -71,8 +71,8 @@ getHomeR = do
 
 
 correctThmDollars :: Thm -> Thm
-correctThmDollars thm = thm { thmContent = correctDollarSign (thmContent thm)
-                            , thmProof = fmap correctDollarSign (thmProof thm) }
+correctThmDollars thm = thm { thmContent = correctDollarSign (thmContent thm) }
+--                            , thmProof = fmap correctDollarSign (thmProof thm) }
 
 
 postHomeR :: Handler RepHtml
@@ -102,13 +102,13 @@ thmForm :: Form Thm
 thmForm = renderDivs $ Thm
           <$> areq (selectFieldList categories) "Category" Nothing
           <*> (unTextarea <$> areq textareaField "Content" Nothing)
-          <*> (liftA unTextarea <$> aopt textareaField "Proof" Nothing)
-          <*> aopt textField "Name" Nothing
+          -- <*> (liftA unTextarea <$> aopt textareaField "Proof" Nothing)
+          -- <*> aopt textField "Name" Nothing
           <*> (ThmSignature
                <$> (areq textField "Signature From" Nothing)
                <*> (areq textField "Signature To" Nothing))
-          <*> aopt textField "Reference" Nothing
-          <*> aopt textField "Note" Nothing
+          -- <*> aopt textField "Reference" Nothing
+          -- <*> aopt textField "Note" Nothing
   where categories = Import.map (\ x -> (T.pack $ show x, x)) $ [minBound .. maxBound]
 
 
