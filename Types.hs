@@ -1,17 +1,19 @@
 module Types where
 
 import qualified Data.Text as T (Text)
+import Prelude
 
 -- | Internal Thm Type, representing a theorem entity.
 data Thm = Thm
-  { thmType ::          ThmType
-  , thmContent ::       ThmContent
+  { thmType ::          Maybe ThmType
+  , thmContent ::       Maybe ThmContent
+  , thmProof ::         Maybe ThmProof
   , thmName ::          Maybe ThmName
   , thmSignature ::     Maybe ThmSignature
-  , thmProof ::         Maybe ThmProof
   , thmRef ::           Maybe ThmRef -- references; e.g. urls, paper title, book section
   , thmNote ::          Maybe ThmNote -- notes
   }
+  --deriving (Eq, Show)
 
 data ThmType = Corrolary
              | Definition
@@ -20,6 +22,7 @@ data ThmType = Corrolary
              | Lemma
              | Algorithm
              | Remark
+             --deriving (Show, Eq)
 
                     -- ThmSignature  From To
                     -- Examples:

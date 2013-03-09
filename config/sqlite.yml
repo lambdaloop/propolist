@@ -1,0 +1,20 @@
+Default: &defaults
+  database: propolist.sqlite3
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: propolist_test.sqlite3
+  <<: *defaults
+
+Staging:
+  database: propolist_staging.sqlite3
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: propolist_production.sqlite3
+  poolsize: 100
+  <<: *defaults
