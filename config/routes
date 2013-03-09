@@ -5,4 +5,6 @@
 /robots.txt RobotsR GET
 
 / HomeR GET POST
-person PersonR GET POST
+/person PersonR GET POST
+/getp/#PersonId PersonDataR GET
+
