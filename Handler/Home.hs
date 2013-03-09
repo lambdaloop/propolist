@@ -33,6 +33,22 @@ overallWidget = do
     <p .lead>List & review your propositions, definitions, theorems, all things crazy.
 |]
 
+homeNavWidget :: Widget
+homeNavWidget = do
+    toWidget [hamlet|
+<ul class="nav nav-pills pull-right">
+  <li class="active"><a href="/">Home</a>
+  <li><a href="/list">List</a>
+|]
+
+listNavWidget :: Widget
+listNavWidget = do
+    toWidget [hamlet|
+<ul class="nav nav-pills pull-right">
+  <li><a href="/">Home</a>
+  <li class="active"><a href="/list">List</a>
+|]
+
 footerWidget :: Widget
 footerWidget = do
     toWidget [hamlet|
@@ -49,6 +65,7 @@ getHomeR = do
     defaultLayout $ do
         aDomId <- lift newIdent
         overallWidget
+        homeNavWidget
         $(widgetFile "homepage")
         footerWidget
 
@@ -73,6 +90,7 @@ postHomeR = do
     defaultLayout $ do
         aDomId <- lift newIdent
         overallWidget
+        homeNavWidget
         $(widgetFile "homepage")
         footerWidget
 
