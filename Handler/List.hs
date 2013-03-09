@@ -10,14 +10,6 @@ import Control.Applicative
 
 import Handler.Home (overallWidget, footerWidget, listNavWidget)
 
--- import Control.Arrow (&&&)
-
--- listWidget :: Widget
--- listWidget = do
---     toWidget [hamlet|
--- #{thmCategory $ head thms}
--- ]
-
 -- | Handler for /list, the list of theorems added.
 getListR :: Handler RepHtml
 getListR = do

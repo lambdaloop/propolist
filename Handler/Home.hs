@@ -9,8 +9,6 @@ import Data.ByteString.Lazy.Char8 as BL
 import Control.Monad
 import Control.Applicative
 
--- import Control.Arrow (&&&)
-
 -- | Replace dollar signs by '\(' and '\)'. Dirty trick.
 correctDollarSign :: Text -> Text
 correctDollarSign s = T.pack $ helper (T.unpack s) (0 :: Int)
@@ -74,7 +72,6 @@ correctThmDollars :: Thm -> Thm
 correctThmDollars thm = thm { thmContent = correctDollarSign (thmContent thm) }
 --                            , thmProof = fmap correctDollarSign (thmProof thm) }
 
-
 postHomeR :: Handler RepHtml
 postHomeR = do
     ((result, formWidget), formEnctype) <- runFormPost thmForm
@@ -110,19 +107,3 @@ thmForm = renderDivs $ Thm
           -- <*> aopt textField "Reference" Nothing
           -- <*> aopt textField "Note" Nothing
   where categories = Import.map (\ x -> (T.pack $ show x, x)) $ [minBound .. maxBound]
-
-
--- entryForm :: Form Thm
--- areqMaybe field fs mdef = fmap Just (areq field fs $ join mdef)
-
---entryForm :: RenderMessage master FormMessage =>
---         Maybe Thm -> Html ->
---         Form sub master Thm
-
---entryForm thm = renderDivs $ Thm
---    <$> areqMaybe textField "Type" (thmType <$> thm)
---    <*> areqMaybe textField "Content" (thmContent <$> thm)
---    <*> aopt textField "Proof" Nothing
---    <*> aopt textField "Name" Nothing
---    <*> aopt textField "Signature" Nothing
---    <*> aopt textField "Ref" Nothing
