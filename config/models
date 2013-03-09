@@ -1,6 +1,6 @@
 ThmSignature
-  signFrom [ThmStatement]
-  signTo [ThmStatement]
+  signFrom ThmStatement
+  signTo ThmStatement
   deriving Show Eq Read
 
 Thm
@@ -8,7 +8,7 @@ Thm
   content Text
   proof Text Maybe
   name Text Maybe
-  sign ThmSignature Maybe
+  sign ThmSignature
   ref Text Maybe
   note Text Maybe
   deriving Eq Show

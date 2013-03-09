@@ -6,7 +6,7 @@
 <br>
 
 <p #form>
-  $maybe con <- submission
+  $maybe con <- fmap thmContent submission
     <div .message>
       <h4 .text-info>Proposition
       <br>
@@ -64,3 +64,7 @@
     test suite that performs tests on this page. #
     You can run your tests by doing: <pre>yesod test</pre>
     -->
+
+
+
+

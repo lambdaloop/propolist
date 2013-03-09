@@ -62,8 +62,8 @@ getPersonR = do
 
 getPersonDataR :: PersonId -> Handler RepHtml
 getPersonDataR personId = do
-    person <- runDB $ get404 personId
-    return $ RepHtml $ toContent $ show person
+    persons <- runDB $ selectList ([] :: [Filter Person]) []
+    return $ RepHtml $ toContent $ show persons
 
 -- The POST handler processes the form. If it is successful, it displays the
 -- parsed person. Otherwise, it displays the form again with error messages.

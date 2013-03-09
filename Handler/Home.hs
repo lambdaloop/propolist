@@ -2,16 +2,18 @@
 module Handler.Home where
 
 import Import
+import Model
 
 import qualified Data.Text as T
 import Data.ByteString.Lazy.Char8 as BL
 import Control.Monad
 import Control.Applicative
+
 -- import Control.Arrow (&&&)
 
 -- | Replace dollar signs by '\(' and '\)'. Dirty trick.
-correctDollarSign :: String -> String
-correctDollarSign s = helper s (0 :: Int)
+correctDollarSign :: Text -> Text
+correctDollarSign s = T.pack $ helper (T.unpack s) (0 :: Int)
     where helper "" _ = ""
           helper ('$':'$':x) _ = '$':(helper ('$':x) 3)
           helper ('$':x) 0 = '\\':'(':(helper x 1)
@@ -23,7 +25,7 @@ correctDollarSign s = helper s (0 :: Int)
 getHomeR :: Handler RepHtml
 getHomeR = do
     (formWidget, formEnctype) <- generateFormPost thmForm
-    let submission = Nothing :: Maybe Text
+    let submission = Nothing :: Maybe Thm
         handlerName = "getHomeR" :: Text
     defaultLayout $ do
         aDomId <- lift newIdent
@@ -33,13 +35,23 @@ getHomeR = do
         $(widgetFile "homepage")
 
 
+
+correctThmDollars :: Thm -> Thm
+correctThmDollars thm = thm { thmContent = correctDollarSign (thmContent thm)
+                            , thmProof = fmap correctDollarSign (thmProof thm) }
+
+
 postHomeR :: Handler RepHtml
 postHomeR = do
     ((result, formWidget), formEnctype) <- runFormPost thmForm
     let handlerName = "postHomeR" :: Text
         submission = case result of
-            FormSuccess res -> Just $ Textarea . T.pack $ correctDollarSign $ T.unpack $ unTextarea res
-            _ -> Nothing
+          FormSuccess res -> Just $ correctThmDollars res
+          _ -> Nothing
+
+    case submission of
+      Just s -> runDB $ insert s
+      _ -> undefined
 
     defaultLayout $ do
         aDomId <- lift newIdent
@@ -58,14 +70,13 @@ thmForm = renderDivs $ Thm
           <*> (unTextarea <$> areq textareaField "Content" Nothing)
           <*> (liftA unTextarea <$> aopt textareaField "Proof" Nothing)
           <*> aopt textField "Name" Nothing
-          <*> (liftA textToSignature <$> aopt textField "Signature" Nothing)
+          <*> (ThmSignature
+               <$> (areq textField "Signature From" Nothing)
+               <*> (areq textField "Signature To" Nothing))
           <*> aopt textField "Reference" Nothing
           <*> aopt textField "Note" Nothing
-  where categories = Import.map (\ x -> ((T.pack . show) x, x)) $ [minBound .. maxBound]
+  where categories = Import.map (\ x -> (T.pack $ show x, x)) $ [minBound .. maxBound]
 
-
-textToSignature :: Text -> ThmSignature
-textToSignature t = ThmSignature [] []
 
 -- entryForm :: Form Thm
 -- areqMaybe field fs mdef = fmap Just (areq field fs $ join mdef)
