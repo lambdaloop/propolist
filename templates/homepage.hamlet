@@ -1,5 +1,6 @@
-<h1> PropoList :: [Proposition]
-<p .lead>List & review your propositions, definitions, theorems, all things crazy.
+<div .page-header>
+    <h1> PropoList :: [Proposition]
+    <p .lead>List & review your propositions, definitions, theorems, all things crazy.
 
 <br>
 <br>
@@ -7,9 +8,9 @@
 <p #form>
   $maybe con <- submission
     <div .message>
-      <b>Proposition: <br>
+      <h4 .text-info>Proposition
       <br>
-            #{con} <br> <br> <br>
+            <p style="font-size:medium;"> #{con} <br> <br> <br>
   \ <form method=post action=@{HomeR}#form enctype=#{formEnctype} placeholder="Type">
     ^{formWidget}
     <br>
@@ -23,7 +24,7 @@
 
 <div #footer>
     <div .container>
-        <p .muted .credit> Presented by <a href="https://github.com/lambdaloop">Pierre Karashchuk</a> and <a href="https://github.com/concretevitamin">Zongheng Yang</a>.
+        <p .muted .credit> Powered by <a href="http://www.yesodweb.com/">Yesod</a>, the magnificent <a href="http://www.haskell.org/haskellwiki/Haskell">Haskell</a>, and <a href="http://www.mathjax.org/">MathJax</a>.<br> Hacked together by <a href="https://github.com/lambdaloop">Pierre Karashchuk</a> and <a href="https://github.com/concretevitamin">Zongheng Yang</a>.
 
 
 <!--<ol>
