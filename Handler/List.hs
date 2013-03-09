@@ -29,7 +29,8 @@ getListR = do
         toWidget [whamlet|
 <h3 .text-success> Your [Proposition] <br>
 $forall Entity thmId thm <- thms
-    <p>#{show $ thmCategory thm}. <p style="font-size:medium;"> #{thmContent thm} <br> <br>
+    <p>#{show $ thmCategory thm}. <p style="font-size:medium;"> #{thmContent thm}
+                                           <p style="font-size:medium"> #{show $ thmSign thm}<br> <br>
 |]
         footerWidget
         $(widgetFile "list")
