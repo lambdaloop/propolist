@@ -8,3 +8,4 @@
 /person PersonR GET POST
 /getp/#PersonId PersonDataR GET
 
+/list ListR GET
