@@ -1,16 +1,30 @@
-<h1> Propolist
-<h4> List, catalog, manage your propositions, theorems, definitions, all things crazy.
+<h1> PropoList :: [Proposition]
+<p .lead>List & review your propositions, definitions, theorems, all things crazy.
 
-<li #form>
-  This is an example trivial Form. Read the #
-  \<a href="http://www.yesodweb.com/book/forms">Forms chapter</a> #
-  on the yesod book to learn more about them.
+<br>
+<br>
+
+<p #form>
   $maybe con <- submission
     <div .message>
-      You say it has: <em>#{con}</em>
-  <form method=post action=@{HomeR}#form enctype=#{formEnctype}>
+      <b>Proposition: <br>
+      <br>
+            #{con} <br> <br> <br>
+  \ <form method=post action=@{HomeR}#form enctype=#{formEnctype} placeholder="Type">
     ^{formWidget}
-    <input type="submit" value="Send it!">
+    <br>
+    <div> <button class="btn btn-success" type="submit">Add
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+<div #footer>
+    <div .container>
+        <p .muted .credit> Presented by <a href="https://github.com/lambdaloop">Pierre Karashchuk</a> and <a href="https://github.com/concretevitamin">Zongheng Yang</a>.
+
 
 <!--<ol>
   <li>Now that you have a working project you should use the #
