@@ -3,20 +3,14 @@ module Handler.Home where
 
 import Import
 
-<<<<<<< HEAD
--- import Types
-
--- import Control.Monad
-=======
 import qualified Data.Text as T
-import qualified Data.ByteString.Lazy.Char8 as BL
-
+import Data.Text (Text)
+import Data.ByteString.Lazy.Char8 as BL
 import Control.Monad
->>>>>>> b168731f30e507190cd668ea6d4c26467e093b31
 
 -- | Replace dollar signs by '\(' and '\)'. Dirty trick.
 correctDollarSign :: String -> String
-correctDollarSign s = helper s 0
+correctDollarSign s = helper s (0 :: Int)
     where helper "" _ = ""
           helper ('$':'$':x) n = '$':(helper ('$':x) 3)
           helper ('$':x) 0 = '\\':'(':(helper x 1)
