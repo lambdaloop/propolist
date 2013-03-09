@@ -1,16 +1,16 @@
 ThmSignature
-  signFrom ThmStatement
-  signTo ThmStatement
+  signFrom [ThmStatement]
+  signTo [ThmStatement]
   deriving Show Eq Read
 
 Thm
   category ThmCategory
-  content ThmContent
-  proof ThmProof Maybe
-  name ThmName Maybe
+  content Text
+  proof Text Maybe
+  name Text Maybe
   sign ThmSignature Maybe
-  ref ThmRef Maybe
-  note ThmNote Maybe
+  ref Text Maybe
+  note Text Maybe
   deriving Eq Show
 
 User

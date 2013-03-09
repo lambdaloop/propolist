@@ -9,23 +9,22 @@ import Data.Time (Day)
 
 -- | Internal Thm Type, representing a theorem entity.
 -- data Thm = Thm
---   { thmType ::          Maybe ThmType
---   , thmContent ::       Maybe ThmContent
---   , thmProof ::         Maybe ThmProof
---   , thmName ::          Maybe ThmName
---   , thmSignature ::     Maybe ThmSignature
---   , thmRef ::           Maybe ThmRef -- references; e.g. urls, paper title, book section
---   , thmNote ::          Maybe ThmNote -- notes
+--   { category ::          ThmType
+--   , content ::       ThmContent
+--   , proof ::         Maybe ThmProof
+--   , name ::          Maybe ThmName
+--   , sign ::     Maybe ThmSignature
+--   , ref ::           Maybe ThmRef -- references; e.g. urls, paper title, book section
+--   , note ::          Maybe ThmNote -- notes
 --   } deriving (Eq, Show)
 
-data ThmCategory = Corrolary
-             | Definition
+data ThmCategory = Corrolary | Definition
              | Theorem
              | Proposition
              | Lemma
              | Algorithm
              | Remark
-             deriving (Show, Eq, Read)
+             deriving (Show, Eq, Read, Enum, Bounded)
 derivePersistField "ThmCategory"
 
 -- ThmSignature  From To

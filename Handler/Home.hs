@@ -4,15 +4,16 @@ module Handler.Home where
 import Import
 
 import qualified Data.Text as T
-import Data.Text (Text)
 import Data.ByteString.Lazy.Char8 as BL
 import Control.Monad
+import Control.Applicative
+-- import Control.Arrow (&&&)
 
 -- | Replace dollar signs by '\(' and '\)'. Dirty trick.
 correctDollarSign :: String -> String
 correctDollarSign s = helper s (0 :: Int)
     where helper "" _ = ""
-          helper ('$':'$':x) n = '$':(helper ('$':x) 3)
+          helper ('$':'$':x) _ = '$':(helper ('$':x) 3)
           helper ('$':x) 0 = '\\':'(':(helper x 1)
           helper ('$':x) 1 = '\\':')':(helper x 0)
           helper ('$':x) 2 = '$':(helper x 0)
@@ -28,7 +29,7 @@ correctDollarSign s = helper s (0 :: Int)
 -- inclined, or create a single monolithic file.
 getHomeR :: Handler RepHtml
 getHomeR = do
-    (formWidget, formEnctype) <- generateFormPost sampleForm
+    (formWidget, formEnctype) <- generateFormPost thmForm
     let submission = Nothing :: Maybe Text
         handlerName = "getHomeR" :: Text
     defaultLayout $ do
@@ -40,7 +41,7 @@ getHomeR = do
 
 postHomeR :: Handler RepHtml
 postHomeR = do
-    ((result, formWidget), formEnctype) <- runFormPost sampleForm
+    ((result, formWidget), formEnctype) <- runFormPost thmForm
     let handlerName = "postHomeR" :: Text
         submission = case result of
             FormSuccess res -> Just $ T.pack $ correctDollarSign $ T.unpack $ unTextarea res
@@ -56,6 +57,21 @@ postHomeR = do
 sampleForm :: Form Textarea
 sampleForm = renderDivs $
     areq textareaField "New Theorem:" Nothing
+
+thmForm :: Form Thm
+thmForm = renderDivs $ Thm
+          <$> areq (selectFieldList categories) "Category" Nothing
+          <*> (unTextarea <$> areq textareaField "Content" Nothing)
+          <*> (liftA unTextarea <$> aopt textareaField "Proof" Nothing)
+          <*> aopt textField "Name" Nothing
+          <*> (liftA textToSignature <$> aopt textField "Signature" Nothing)
+          <*> aopt textField "Reference" Nothing
+          <*> aopt textField "Note" Nothing
+  where categories = Import.map (\ x -> ((T.pack . show) x, x)) $ [minBound .. maxBound]
+
+
+textToSignature :: Text -> ThmSignature
+textToSignature t = ThmSignature [] []
 
 -- entryForm :: Form Thm
 -- areqMaybe field fs mdef = fmap Just (areq field fs $ join mdef)
