@@ -3,6 +3,7 @@ module Model where
 import Prelude
 import Yesod
 import Data.Text (Text)
+import qualified Data.Text as T
 import Database.Persist.Quasi
 import Data.Time (Day)
 
@@ -50,4 +51,4 @@ share [mkPersist sqlOnlySettings, mkMigrate "migrateAll"]
 
 
 instance Show ThmSignature where
-  show (ThmSignature from to) = (show from) ++ " -> " ++ (show to)
+  show (ThmSignature from to) = (T.unpack from) ++ " -> " ++ (T.unpack to)
