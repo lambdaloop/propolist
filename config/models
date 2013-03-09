@@ -1,7 +1,7 @@
 ThmSignature
   signFrom ThmStatement
   signTo ThmStatement
-  deriving Show Eq Read
+  deriving Eq Read
 
 Thm
   category ThmCategory
