@@ -7,6 +7,9 @@ import qualified Data.Text as T
 import Data.ByteString.Lazy.Char8 as BL
 import Control.Monad
 import Control.Applicative
+
+import Handler.Home (overallWidget, footerWidget)
+
 -- import Control.Arrow (&&&)
 
 -- listWidget :: Widget
@@ -19,9 +22,14 @@ import Control.Applicative
 getListR :: Handler RepHtml
 getListR = do
     thms <- runDB $ selectList ([] :: [Filter Thm]) [LimitTo 10]
-    defaultLayout [whamlet|
-<h1> [Added Theorem] <br>
+    defaultLayout $ do
+        aDomId <- lift newIdent
+        overallWidget
+        toWidget [whamlet|
+<h1> Added Theorem <br>
 $forall Entity thmId thm <- thms
-    <p>#{thmCategory thm}
+    <p>#{show $ thmCategory thm}
     <p>#{thmContent thm}
 |]
+        footerWidget
+        $(widgetFile "list")

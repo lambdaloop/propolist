@@ -22,6 +22,25 @@ correctDollarSign s = T.pack $ helper (T.unpack s) (0 :: Int)
           helper (a:x) 3 = a:(helper x 2)
           helper (a:x) n = a:(helper x n)
 
+overallWidget :: Widget
+overallWidget = do
+    setTitle "PropoList"
+    addStylesheet $ StaticR css_bootstrap_css
+    addScriptRemote "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    toWidget [hamlet|
+<div .page-header>
+    <h1> PropoList :: [Proposition]
+    <p .lead>List & review your propositions, definitions, theorems, all things crazy.
+|]
+
+footerWidget :: Widget
+footerWidget = do
+    toWidget [hamlet|
+<div #footer>
+    <div .container>
+        <p .muted .credit> Powered by <a href="http://www.yesodweb.com/">Yesod</a>, the magnificent <a href="http://www.haskell.org/haskellwiki/Haskell">Haskell</a>, and <a href="http://www.mathjax.org/">MathJax</a>.<br> Hacked together by <a href="https://github.com/lambdaloop">Pierre Karashchuk</a> and <a href="https://github.com/concretevitamin">Zongheng Yang</a>.
+|]
+
 getHomeR :: Handler RepHtml
 getHomeR = do
     (formWidget, formEnctype) <- generateFormPost thmForm
@@ -29,11 +48,9 @@ getHomeR = do
         handlerName = "getHomeR" :: Text
     defaultLayout $ do
         aDomId <- lift newIdent
-        setTitle "PropoList"
-        addStylesheet $ StaticR css_bootstrap_css
-        addScriptRemote "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+        overallWidget
         $(widgetFile "homepage")
-
+        footerWidget
 
 
 correctThmDollars :: Thm -> Thm
@@ -55,10 +72,9 @@ postHomeR = do
 
     defaultLayout $ do
         aDomId <- lift newIdent
-        setTitle "PropoList"
-        addStylesheet $ StaticR css_bootstrap_css
-        addScriptRemote "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+        overallWidget
         $(widgetFile "homepage")
+        footerWidget
 
 sampleForm :: Form Textarea
 sampleForm = renderDivs $
