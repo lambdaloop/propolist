@@ -20,13 +20,6 @@ correctDollarSign s = helper s (0 :: Int)
           helper (a:x) 3 = a:(helper x 2)
           helper (a:x) n = a:(helper x n)
 
--- This is a handler function for the GET request method on the HomeR
--- resource pattern. All of your resource patterns are defined in
--- config/routes
---
--- The majority of the code you will write in Yesod lives in these handler
--- functions. You can spread them across multiple files if you are so
--- inclined, or create a single monolithic file.
 getHomeR :: Handler RepHtml
 getHomeR = do
     (formWidget, formEnctype) <- generateFormPost thmForm
@@ -39,12 +32,13 @@ getHomeR = do
         addScriptRemote "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
         $(widgetFile "homepage")
 
+
 postHomeR :: Handler RepHtml
 postHomeR = do
     ((result, formWidget), formEnctype) <- runFormPost thmForm
     let handlerName = "postHomeR" :: Text
         submission = case result of
-            FormSuccess res -> Just $ T.pack $ correctDollarSign $ T.unpack $ unTextarea res
+            FormSuccess res -> Just $ Textarea . T.pack $ correctDollarSign $ T.unpack $ unTextarea res
             _ -> Nothing
 
     defaultLayout $ do
@@ -56,7 +50,7 @@ postHomeR = do
 
 sampleForm :: Form Textarea
 sampleForm = renderDivs $
-    areq textareaField "New Theorem:" Nothing
+    areq textareaField "New Proposition:" Nothing
 
 thmForm :: Form Thm
 thmForm = renderDivs $ Thm
