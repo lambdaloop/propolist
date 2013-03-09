@@ -3,9 +3,27 @@ module Handler.Home where
 
 import Import
 
+<<<<<<< HEAD
 -- import Types
 
 -- import Control.Monad
+=======
+import qualified Data.Text as T
+import qualified Data.ByteString.Lazy.Char8 as BL
+
+import Control.Monad
+>>>>>>> b168731f30e507190cd668ea6d4c26467e093b31
+
+-- | Replace dollar signs by '\(' and '\)'. Dirty trick.
+correctDollarSign :: String -> String
+correctDollarSign s = helper s 0
+    where helper "" _ = ""
+          helper ('$':'$':x) n = '$':(helper ('$':x) 3)
+          helper ('$':x) 0 = '\\':'(':(helper x 1)
+          helper ('$':x) 1 = '\\':')':(helper x 0)
+          helper ('$':x) 2 = '$':(helper x 0)
+          helper (a:x) 3 = a:(helper x 2)
+          helper (a:x) n = a:(helper x n)
 
 -- This is a handler function for the GET request method on the HomeR
 -- resource pattern. All of your resource patterns are defined in
@@ -21,7 +39,9 @@ getHomeR = do
         handlerName = "getHomeR" :: Text
     defaultLayout $ do
         aDomId <- lift newIdent
-        setTitle "Propolist: list, catalog, manage your crazy propositions "
+        setTitle "PropoList"
+        addStylesheet $ StaticR css_bootstrap_css
+        addScriptRemote "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
         $(widgetFile "homepage")
 
 postHomeR :: Handler RepHtml
@@ -29,17 +49,19 @@ postHomeR = do
     ((result, formWidget), formEnctype) <- runFormPost sampleForm
     let handlerName = "postHomeR" :: Text
         submission = case result of
-            FormSuccess res -> Just res
+            FormSuccess res -> Just $ T.pack $ correctDollarSign $ T.unpack $ unTextarea res
             _ -> Nothing
 
     defaultLayout $ do
         aDomId <- lift newIdent
-        setTitle "Propolist"
+        setTitle "PropoList"
+        addStylesheet $ StaticR css_bootstrap_css
+        addScriptRemote "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
         $(widgetFile "homepage")
 
-sampleForm :: Form Text
+sampleForm :: Form Textarea
 sampleForm = renderDivs $
-    areq textField "New Theorem:" Nothing
+    areq textareaField "New Theorem:" Nothing
 
 -- entryForm :: Form Thm
 -- areqMaybe field fs mdef = fmap Just (areq field fs $ join mdef)
