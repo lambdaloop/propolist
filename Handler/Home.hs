@@ -38,7 +38,7 @@ postHomeR = do
     ((result, formWidget), formEnctype) <- runFormPost thmForm
     let handlerName = "postHomeR" :: Text
         submission = case result of
-            FormSuccess res -> Just $ Textarea . T.pack $ correctDollarSign $ T.unpack $ unTextarea res
+            FormSuccess res -> Just $ Textarea . T.pack $ correctDollarSign $ T.unpack $ thmContent res
             _ -> Nothing
 
     defaultLayout $ do
