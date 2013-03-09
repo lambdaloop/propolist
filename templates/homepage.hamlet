@@ -1,10 +1,3 @@
-<div .page-header>
-    <h1> PropoList :: [Proposition]
-    <p .lead>List & review your propositions, definitions, theorems, all things crazy.
-
-<br>
-<br>
-
 <p #form>
   $maybe con <- fmap thmContent submission
     <div .message>
@@ -21,8 +14,3 @@
     <br>
     <br>
     <br>
-
-<div #footer>
-    <div .container>
-        <p .muted .credit> Powered by <a href="http://www.yesodweb.com/">Yesod</a>, the magnificent <a href="http://www.haskell.org/haskellwiki/Haskell">Haskell</a>, and <a href="http://www.mathjax.org/">MathJax</a>.<br> Hacked together by <a href="https://github.com/lambdaloop">Pierre Karashchuk</a> and <a href="https://github.com/concretevitamin">Zongheng Yang</a>.
-
