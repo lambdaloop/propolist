@@ -22,16 +22,6 @@ import Handler.Home (overallWidget, footerWidget)
 getListR :: Handler RepHtml
 getListR = do
     thms <- runDB $ selectList ([] :: [Filter Thm]) [LimitTo 10]
- --    <p>
- --      <h4> #{show $ thmName thm}
- --      <h5> #{show $ thmCategory thm}
- --      <p style="font-size:medium;"> #{thmContent thm}
- --      <p> #{show $ thmProof thm}
- --      <p> #{show $ thmName thm}
- --      <p> #{show $ thmSign thm}
- --      <p> #{show $ thmRef thm}
- --      <p> #{show $ thmNote thm}
- -- |]
     defaultLayout $ do
         aDomId <- lift newIdent
         overallWidget

@@ -6,11 +6,11 @@ ThmSignature
 Thm
   category ThmCategory
   content Text
-  proof Text Maybe
-  name Text Maybe
+  -- proof Text Maybe
+  -- name Text Maybe
   sign ThmSignature
-  ref Text Maybe
-  note Text Maybe
+  -- ref Text Maybe
+  -- note Text Maybe
   deriving Eq Show
 
 User
