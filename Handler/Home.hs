@@ -16,7 +16,7 @@ import Control.Monad
 getHomeR :: Handler RepHtml
 getHomeR = do
     (formWidget, formEnctype) <- generateFormPost sampleForm
-    let submission = Nothing :: Maybe (FileInfo, Text)
+    let submission = Nothing :: Maybe Text
         handlerName = "getHomeR" :: Text
     defaultLayout $ do
         aDomId <- lift newIdent
@@ -36,11 +36,9 @@ postHomeR = do
         setTitle "Welcome To Yesod!"
         $(widgetFile "homepage")
 
-sampleForm :: Form (FileInfo, Text)
-sampleForm = renderDivs $ (,)
-    <$> fileAFormReq "Choose a file"
-    <*> areq textField "What's on the file?" Nothing
-
+sampleForm :: Form Text
+sampleForm = renderDivs $
+    areq textField "New Theorem:" Nothing
 
 -- entryForm :: Form Thm
 areqMaybe field fs mdef = fmap Just (areq field fs $ join mdef)
