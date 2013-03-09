@@ -2,9 +2,10 @@
 module Handler.Home where
 
 import Import
-import Types
 
-import Control.Monad
+-- import Types
+
+-- import Control.Monad
 
 -- This is a handler function for the GET request method on the HomeR
 -- resource pattern. All of your resource patterns are defined in
@@ -33,7 +34,7 @@ postHomeR = do
 
     defaultLayout $ do
         aDomId <- lift newIdent
-        setTitle "Welcome To Yesod!"
+        setTitle "Propolist"
         $(widgetFile "homepage")
 
 sampleForm :: Form Text
@@ -41,7 +42,7 @@ sampleForm = renderDivs $
     areq textField "New Theorem:" Nothing
 
 -- entryForm :: Form Thm
-areqMaybe field fs mdef = fmap Just (areq field fs $ join mdef)
+-- areqMaybe field fs mdef = fmap Just (areq field fs $ join mdef)
 
 --entryForm :: RenderMessage master FormMessage =>
 --         Maybe Thm -> Html ->

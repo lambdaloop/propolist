@@ -7,6 +7,7 @@ import Yesod.Auth
 import Yesod.Auth.BrowserId
 import Yesod.Auth.GoogleEmail
 import Yesod.Default.Config
+import Yesod.Form.Jquery
 import Yesod.Default.Util (addStaticContentExternal)
 import Network.HTTP.Conduit (Manager)
 import qualified Settings
@@ -149,6 +150,8 @@ instance YesodAuth App where
     authPlugins _ = [authBrowserId, authGoogleEmail]
 
     authHttpManager = httpManager
+
+instance YesodJquery App
 
 -- This instance is required to use forms. You can modify renderMessage to
 -- achieve customized and internationalized form validation messages.

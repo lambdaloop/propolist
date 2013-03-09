@@ -12,8 +12,7 @@ data Thm = Thm
   , thmSignature ::     Maybe ThmSignature
   , thmRef ::           Maybe ThmRef -- references; e.g. urls, paper title, book section
   , thmNote ::          Maybe ThmNote -- notes
-  }
-  --deriving (Eq, Show)
+  } deriving (Eq, Show)
 
 data ThmType = Corrolary
              | Definition
@@ -22,13 +21,13 @@ data ThmType = Corrolary
              | Lemma
              | Algorithm
              | Remark
-             --deriving (Show, Eq)
+             deriving (Show, Eq)
 
                     -- ThmSignature  From To
                     -- Examples:
                     -- Reals -> ModEquation
                     -- Equation -> Equation
-data ThmSignature = ThmSignature [ThmStatement] [ThmStatement]
+data ThmSignature = ThmSignature [ThmStatement] [ThmStatement] deriving (Show, Eq)
 
 type ThmContent = T.Text
 type ThmName = T.Text
